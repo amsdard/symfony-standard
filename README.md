@@ -12,6 +12,8 @@ alias composer='docker run --rm -it -v $(pwd):/opt -e"COMPOSER_ALLOW_SUPERUSER=1
 ```
 
 * make sure You have [YAKE](https://yake.amsdard.io/) installed
+* run globally (once): [traefik](https://traefik.io/)
+* create network (once) `docker network create global`
 * make sure You have *Rancher CLI* installed and configured as `rancher`
 
 Install
