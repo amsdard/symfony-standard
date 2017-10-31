@@ -60,8 +60,7 @@
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "branch-alias": {
-            "dev-master": "3.3-dev",
-            "3.3": "3.3-dev"
+            "dev-master": "3.3-dev"
         }
     }
 }
