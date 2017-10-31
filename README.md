@@ -19,17 +19,18 @@ alias composer='docker run --rm -it -v $(pwd):/opt -e"COMPOSER_ALLOW_SUPERUSER=1
 Install
 ---
 ```
-composer create-project amsdard/symfony-standard my_project_name
+composer create-project --no-scripts amsdard/symfony-standard my_project_name
 ```
 * enter project name (lower case) during installation to configure project
-* add `COMPOSER_ALLOW_SUPERUSER=1` env in `config.env` if needed
 
 Run (local)
 ---
 ```
+yake configure
 yake up
-yake composer update
+yake composer install
 ```
+* add `COMPOSER_ALLOW_SUPERUSER=1` env in `config.env` if needed
 
 Run (dev / rancher)
 ---
