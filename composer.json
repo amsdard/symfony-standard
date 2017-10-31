@@ -1,12 +1,10 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "amsdard/symfony-standard",
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-4": {
-            "AppBundle\\": "src/AppBundle"
-        },
+        "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
@@ -32,7 +30,6 @@
     },
     "scripts": {
         "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -44,11 +41,14 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "post-create-project-cmd": [
+            "yake configure"
         ]
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "7.1.10"
         },
         "sort-packages": true
     },
@@ -59,9 +59,6 @@
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
         "branch-alias": {
             "dev-master": "3.4-dev"
         }
