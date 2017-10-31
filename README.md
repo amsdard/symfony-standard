@@ -21,16 +21,15 @@ Install
 ```
 composer create-project --no-scripts amsdard/symfony-standard my_project_name
 ```
-* enter project name (lower case) during installation to configure project
 
 Run (local)
 ---
 ```
+# cd to project directory
 yake configure
-yake up
+yake up    
 yake composer install
 ```
-* add `COMPOSER_ALLOW_SUPERUSER=1` env in `config.env` if needed
 
 Run (dev / rancher)
 ---

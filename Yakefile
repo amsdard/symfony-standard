@@ -39,15 +39,15 @@ populate:
 
 # Fresh installation process - to be run one time
 configure:
-   - if [[ ! -f composer.phar ]]; then curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar; fi
-   - if [[ config.env ]]; exit; fi
+   - "[[ ! -f composer.phar ]] && curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar"
+   - "[[ -f config.env ]] && exit"
    - export SECRET=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)
    - cp ./config.env.dist ./config.env
-   - sed -i '' "s/{secret}/$SECRET/g" ./config.env
+   - sed -i'' "s/{secret}/$SECRET/g" ./config.env
    - echo "enter project name (lowercase):"
    - read projectname
-   - sed -i '' "s/{projectname}/$projectname/g" ./docker-compose-dev.yml
-   - sed -i '' "s/{projectname}/$projectname/g" ./docker-compose-rancher.yml
+   - sed -i'' "s/{projectname}/$projectname/g" ./docker-compose-dev.yml
+   - sed -i'' "s/{projectname}/$projectname/g" ./docker-compose-rancher.yml
 
 # default values
 _config:
