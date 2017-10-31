@@ -36,14 +36,14 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "pre-install-cmd": [
+            "yake configure"
+        ],
         "post-install-cmd": [
             "@symfony-scripts"
         ],
         "post-update-cmd": [
             "@symfony-scripts"
-        ],
-        "post-root-package-install": [
-            "yake configure"
         ]
     },
     "config": {
