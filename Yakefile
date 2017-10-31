@@ -39,7 +39,8 @@ populate:
 
 # Fresh installation process - to be run one time
 configure:
-   - curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
+   - if [[ ! -f composer.phar ]]; then curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar; fi
+   - if [[ config.env ]]; exit; fi
    - export SECRET=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)
    - cp ./config.env.dist ./config.env
    - sed -i '' "s/{secret}/$SECRET/g" ./config.env
