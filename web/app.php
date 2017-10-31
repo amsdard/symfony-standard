@@ -1,13 +1,20 @@
 <?php
-
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Debug;
+
+$environment = getenv('SYMFONY__ENV') ?: 'prod';
+$isDev = ($environment == 'dev');
 
 require __DIR__.'/../vendor/autoload.php';
 if (PHP_VERSION_ID < 70000) {
     include_once __DIR__.'/../var/bootstrap.php.cache';
 }
 
-$kernel = new AppKernel('prod', false);
+if ($isDev) {
+    Debug::enable();
+}
+$kernel = new AppKernel($environment, $isDev);
+
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }

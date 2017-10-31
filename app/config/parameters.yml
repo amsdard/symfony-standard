@@ -1,0 +1,14 @@
+parameters:
+    database_host: '%env(MYSQL_HOST)%'
+    database_port: '%env(MYSQL_PORT)%'
+    database_name: '%env(MYSQL_DATABASE)%'
+    database_user: '%env(MYSQL_USER)%'
+    database_password: '%env(MYSQL_PASSWORD)%'
+
+    mailer_transport: '%env(MAIL_TRANSPORT)%'
+    mailer_host: '%env(MAIL_HOST)%'
+    mailer_port: '%env(MAIL_PORT)%'
+    mailer_user: '%env(MAIL_USER)%'
+    mailer_password: '%env(MAIL_PASSWORD)%'
+
+    secret: '%env(SYMFONY__SECRET)%'
