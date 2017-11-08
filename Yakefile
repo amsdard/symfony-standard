@@ -40,17 +40,15 @@ populate:
 # Fresh installation process - to be run one time
 configure:
    - "[[ ! -f composer.phar ]] && curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar"
-   - "[[ -f config.env ]] && exit"
-   - export SECRET=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)
-   - cp ./config.env.dist ./config.env
-   - sed -i -e "s/{secret}/$SECRET/g" ./config.env
-   - echo "enter project name (lowercase):"
-   - read projectname
-   - sed -i -e "s/{projectname}/$projectname/g" ./docker-compose-dev.yml
-   - sed -i -e "s/{projectname}/$projectname/g" ./docker-compose-rancher.yml
-   - echo "config.env created! Your domain $projectname.app"
+   - "[[ -f docker/php/config.env ]] && exit"
+   - SECRET=$(date|md5sum | head -c 20)
+   - for file in ./docker/*/*.dist; do newfile="$(dirname $file)/config.env" && cp "$file" "$newfile"; done
+   - sed -i -e "s/{secret}/$SECRET$SECRET/g" ./docker/php/config.env
+   - sed -i -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
+   - sed -i -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
 
 # default values
 _config:
   FORCE_ALL: 1
   ENV: dev
+  PROJECTNAME: ${PWD##*/}

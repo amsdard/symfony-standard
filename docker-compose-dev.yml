@@ -9,7 +9,7 @@ services:
     networks:
       - global
     env_file:
-       - ./config.env
+       - ./docker/mysql/config.env
     volumes:
        - ~/data/mysql.{projectname}.app:/var/lib/mysql
     restart: always
@@ -25,7 +25,7 @@ services:
     stdin_open: true
     tty: true
     env_file:
-       - ./config.env
+       - ./docker/php/config.env
     volumes:
        - ./:/opt
        - ~/.ssh:/var/www/.ssh:cached

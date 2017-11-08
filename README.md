@@ -6,30 +6,35 @@ See [DOCS](https://symfony.com/doc/current/index.html) for more details.
 
 Requirements
 ---
-Add *composer* alias-command to Your `~/.bashrc` or `~/.zshrc`:
-```
-alias composer='docker run --rm -it -v $(pwd):/opt -e"COMPOSER_ALLOW_SUPERUSER=1" amsdard/composer composer --ignore-platform-reqs --working-dir=/opt'
-```
+ * configure Your local [projects enrironment](https://bitbucket.org/as-docker/projects-environment)
+ * install composer globally [global composer command](https://hub.docker.com/r/amsdard/composer/)
+ * make sure You have [YAKE](https://yake.amsdard.io/) installed
 
-* make sure You have [YAKE](https://yake.amsdard.io/) installed
-* run globally (once): [traefik](https://traefik.io/)
-* create network (once) `docker network create global`
-* make sure You have *Rancher CLI* installed and configured as `rancher`
 
-Install
+Install by global `composer`
 ---
 ```
-composer create-project --no-scripts amsdard/symfony-standard my_project_name
-```
-
-Run (local)
----
-```
+composer create-project amsdard/symfony-standard project-name
 # cd to project directory
-yake configure
-yake up    
-yake composer install
+yake up
 ```
+
+
+Install by `git` only
+---
+```
+git clone git@github.com:amsdard/symfony-standard.git project-name
+# cd to project directory
+yake configure    # optionally `yake PROJECTNAME=other-name configure`
+yake up
+```
+
+
+Settings
+---
+* edit `./docker/*/config.env` files
+* directory name `project-name` will become Your domain name: `project-name.app` and Your container's image tag namespace
+
 
 Run (dev / rancher)
 ---

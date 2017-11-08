@@ -1,6 +1,7 @@
 /.idea
 
-/config.env
+/docker/*/*.env
+
 /composer.phar
 
 /.web-server-pid

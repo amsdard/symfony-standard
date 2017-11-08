@@ -30,13 +30,18 @@
     },
     "scripts": {
         "symfony-scripts": [
+            "Component\\EnvHandler::loadEnvFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "configure": [
+            "yake configure"
+        ],
         "post-install-cmd": [
+            "@configure",
             "@symfony-scripts"
         ],
         "post-update-cmd": [
@@ -56,6 +61,9 @@
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
+        "env-files": [
+            "docker/php/config.env"
+        ],
         "branch-alias": {
             "dev-master": "3.3-dev"
         }
