@@ -27,6 +27,7 @@ git clone git@github.com:amsdard/symfony-standard.git project-name
 # cd to project directory
 yake configure    # optionally `yake PROJECTNAME=other-name configure`
 yake up
+yake composer install
 ```
 
 

@@ -40,12 +40,15 @@ populate:
 # Fresh installation process - to be run one time
 configure:
    - "[[ ! -f composer.phar ]] && curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar"
+   - "[[ ! -d vendor ]] && mkdir vendor"
    - "[[ -f docker/php/config.env ]] && exit"
-   - SECRET=$(date|md5sum | head -c 20)
+   - md5app=$(hash md5sum 2>/dev/null && echo "md5sum" || echo "md5")
+   - SECRET=$(date|$md5app | head -c 20)
    - for file in ./docker/*/*.dist; do newfile="$(dirname $file)/config.env" && cp "$file" "$newfile"; done
-   - sed -i -e "s/{secret}/$SECRET$SECRET/g" ./docker/php/config.env
-   - sed -i -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
-   - sed -i -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
+   - sed -i '.backup' "s/{secret}/$SECRET$SECRET/g" ./docker/php/config.env
+   - sed -i '.backup' "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
+   - sed -i '.backup' "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
+   - rm -rf ./docker/*/*.backup
 
 # default values
 _config:
