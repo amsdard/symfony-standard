@@ -1,7 +1,11 @@
 docker-compose: docker-compose -f docker-compose-$ENV.yml $CMD
 php: $BIN docker-compose exec php entrypoint php $CMD
 console: $BIN php ./bin/console -e=$ENV $CMD
-composer: $BIN php ./composer.phar --working-dir=/opt --optimize-autoloader $CMD
+composer: "docker run --rm -it
+          -v ~/.ssh:/home/php/.ssh
+          -v $(pwd):/opt
+          -v ~/.docker-composer:/home/php/.composer
+          amsdard/composer composer --ignore-platform-reqs --optimize-autoloader $COMPOSER_MODE $CMD"
 nodejs: "docker run -it --rm -w /usr/src/app
       -v $(pwd):/usr/src/app -v ~/.docker-node-cache:/home/node/cache -v ~/.ssh:/home/node/.ssh
       amsdard/node $CMD"
@@ -39,19 +43,18 @@ populate:
 
 # Fresh installation process - to be run one time
 configure:
-   - "[[ ! -f composer.phar ]] && curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar"
    - "[[ ! -d vendor ]] && mkdir vendor"
    - "[[ -f docker/php/config.env ]] && exit"
    - md5app=$(hash md5sum 2>/dev/null && echo "md5sum" || echo "md5")
    - SECRET=$(date|$md5app | head -c 20)
    - for file in ./docker/*/*.dist; do newfile="$(dirname $file)/config.env" && cp "$file" "$newfile"; done
-   - sed -i '.backup' "s/{secret}/$SECRET$SECRET/g" ./docker/php/config.env
-   - sed -i '.backup' "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
-   - sed -i '.backup' "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
-   - rm -rf ./docker/*/*.backup
+   - perl -pi -w -e "s/{secret}/$SECRET$SECRET/g;" ./docker/php/config.env
+   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
+   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
 
 # default values
 _config:
   FORCE_ALL: 1
   ENV: dev
+  COMPOSER_MODE: $([[ $ENV = "dev" ]] || echo "--no-dev")
   PROJECTNAME: ${PWD##*/}

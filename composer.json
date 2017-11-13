@@ -13,6 +13,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "amsdard/composer-load-env": "^1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
@@ -29,8 +30,10 @@
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
+        "load-env-files": [
+            "Amsdard\\Component\\EnvHandler::loadEnvFiles"
+        ],
         "symfony-scripts": [
-            "Component\\EnvHandler::loadEnvFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -42,9 +45,11 @@
         ],
         "post-install-cmd": [
             "@configure",
+            "@load-env-files",
             "@symfony-scripts"
         ],
         "post-update-cmd": [
+            "@load-env-files",
             "@symfony-scripts"
         ]
     },

@@ -25,9 +25,8 @@ Install by `git` only
 ```
 git clone git@github.com:amsdard/symfony-standard.git project-name
 # cd to project directory
-yake configure    # optionally `yake PROJECTNAME=other-name configure`
-yake up
 yake composer install
+yake up
 ```
 
 
@@ -35,7 +34,16 @@ Settings
 ---
 * edit `./docker/*/config.env` files
 * directory name `project-name` will become Your domain name: `project-name.app` and Your container's image tag namespace
-
+* change YAKE `configure` task (keep only Your project commands)
+* update `composer.json` by Your project name, description
+* if You want to use local composer (based on PHP image):
+```
+curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
+```
+and replace YAKE *composer* task by:
+```
+composer: $BIN php ./composer.phar --optimize-autoloader $COMPOSER_MODE $CMD
+```
 
 Run (dev / rancher)
 ---
