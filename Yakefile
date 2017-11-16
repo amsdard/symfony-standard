@@ -17,7 +17,7 @@ bower: $BIN node bower $CMD
 grunt: $BIN node grunt $CMD
 gulp: $BIN node gulp $CMD
 
-# Build & push to hub.amsdard.io, ie: `yake push data`
+# Build & push to hub.amsdard.io, ie: `yake push php`
 push:
   - $BIN docker-compose build $CMD
   - $BIN docker-compose push $CMD
@@ -43,14 +43,16 @@ populate:
 
 # Fresh installation process - to be run one time
 configure:
-   - "[[ ! -d vendor ]] && mkdir vendor"
    - "[[ -f docker/php/config.env ]] && exit"
    - md5app=$(hash md5sum 2>/dev/null && echo "md5sum" || echo "md5")
    - SECRET=$(date|$md5app | head -c 20)
    - for file in ./docker/*/*.dist; do newfile="$(dirname $file)/config.env" && cp "$file" "$newfile"; done
    - perl -pi -w -e "s/{secret}/$SECRET$SECRET/g;" ./docker/php/config.env
+
+configure-docker:
    - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-dev.yml
-   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-rancher.yml
+   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose-prod.yml
+   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./deploy/rancher/docker-compose-rancher.yml
 
 # default values
 _config:

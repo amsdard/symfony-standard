@@ -16,6 +16,7 @@ Install by global `composer`
 ```
 composer create-project amsdard/symfony-standard project-name
 # cd to project directory
+yake configure-docker
 yake up
 ```
 
@@ -26,15 +27,18 @@ Install by `git` only
 git clone git@github.com:amsdard/symfony-standard.git project-name
 # cd to project directory
 yake composer install
+yake configure-docker
 yake up
 ```
 
-
-Settings
+TODO:
 ---
-* edit `./docker/*/config.env` files
+- asset bundle
+
+First project install
+---
 * directory name `project-name` will become Your domain name: `project-name.app` and Your container's image tag namespace
-* change YAKE `configure` task (keep only Your project commands)
+* remove YAKE `configure-docker` task
 * update `composer.json` by Your project name, description
 * if You want to use local composer (based on PHP image):
 ```
@@ -45,12 +49,16 @@ and replace YAKE *composer* task by:
 composer: $BIN php ./composer.phar --optimize-autoloader $COMPOSER_MODE $CMD
 ```
 
+Settings
+---
+* edit `./docker/*/config.env` files
+
 Run (dev / rancher)
 ---
 ```
 yake push php
 yake push nginx
 ```
-* import `docker-compose-rancher.yml` into Rancher
+* import `docker-compose-rancher.yml` into Rancher + complete ENVs
 * make sure `mysql` works on specific host (Scheduling)
 * make sure `nginx` has *Health Check* enabled
