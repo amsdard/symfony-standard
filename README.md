@@ -46,12 +46,15 @@ curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
 ```
 and replace YAKE *composer* task by:
 ```
-composer: $BIN php ./composer.phar --optimize-autoloader $COMPOSER_MODE $CMD
+composer: $BIN php ./composer.phar --optimize-autoloader $CMD
 ```
 
 Settings
 ---
 * edit `./docker/*/config.env` files
+* do not use `require-dev` in composer.json (keep common vendors)
+* `yake console assetic:dump --env=prod --no-debug` before deploy
+* `yake console assetic:watch` to work with assets locally
 
 Run (dev / rancher)
 ---
@@ -59,6 +62,6 @@ Run (dev / rancher)
 yake push php
 yake push nginx
 ```
-* import `docker-compose-rancher.yml` into Rancher + complete ENVs
+* import `./deploy/rancher/docker-compose.yml` into Rancher + complete ENVs
 * make sure `mysql` works on specific host (Scheduling)
 * make sure `nginx` has *Health Check* enabled

@@ -15,7 +15,7 @@ services:
     restart: always
 
   php:
-    image: amsdard.io/{projectname}/php:dev
+    image: amsdard.io/{projectname}/php:1.0
     container_name: php.{projectname}.app
     build:
         context: ./
@@ -35,7 +35,7 @@ services:
     restart: always
 
   nginx:
-    image: amsdard.io/{projectname}/nginx:dev
+    image: amsdard.io/{projectname}/nginx:1.0
     container_name: nginx.{projectname}.app
     build:
         context: ./
