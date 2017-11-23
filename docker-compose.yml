@@ -45,7 +45,7 @@ services:
     stdin_open: true
     tty: true
     labels:
-      - "traefik.frontend.rule=HostRegexp:{subdomain}.{projectname}.app,{projectname}.app"
+       traefik.frontend.rule: "HostRegexp:{subdomain}.{projectname}.app,{projectname}.app"
     volumes:
        - ./web:/opt/web:cached
        - ./docker/nginx/:/etc/nginx/conf.d:cached

@@ -17,6 +17,7 @@ Install by global `composer`
 composer create-project amsdard/symfony-standard project-name
 # cd to project directory
 yake configure-docker
+# configure each `config.env` in `./docker/` directory
 yake up
 ```
 
@@ -28,12 +29,9 @@ git clone git@github.com:amsdard/symfony-standard.git project-name
 # cd to project directory
 yake composer install
 yake configure-docker
+# configure each `config.env` in `./docker/` directory
 yake up
 ```
-
-TODO:
----
-- asset bundle
 
 First project install
 ---
