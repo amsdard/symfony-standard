@@ -7,38 +7,37 @@ See [DOCS](https://symfony.com/doc/current/index.html) for more details.
 Requirements
 ---
  * configure Your local [projects enrironment](https://bitbucket.org/as-docker/projects-environment)
- * install composer globally [global composer command](https://hub.docker.com/r/amsdard/composer/)
+ * [optional] install composer globally [global composer command](https://hub.docker.com/r/amsdard/composer/)
  * make sure You have [YAKE](https://yake.amsdard.io/) installed
 
 
-Install by global `composer`
+Create project
 ---
-```
-composer create-project amsdard/symfony-standard project-name
-# cd to project directory
-yake configure-docker
-# configure each `config.env` in `./docker/` directory
-yake up
-```
-
-
-Install by `git` only
----
+* git only way
 ```
 git clone git@github.com:amsdard/symfony-standard.git project-name
 # cd to project directory
 yake composer install
-yake configure-docker
-# configure each `config.env` in `./docker/` directory
-yake up
 ```
+* global `composer` way
+```
+composer create-project amsdard/symfony-standard project-name
+```
+
 
 First project install
 ---
+```
+yake configure-docker
+# configure each "./docker/*/config.env"
+yake up
+yake console assetic:watch   # run in background
+```
 * directory name `project-name` will become Your domain name: `project-name.app` and Your container's image tag namespace
-* remove YAKE `configure-docker` task
+* remove YAKE `configure-docker` task from `Yakefile`
 * update `composer.json` by Your project name, description
-* if You want to use local composer (based on PHP image):
+* do not use `require-dev` in composer.json (keep common vendors)
+* if You want to use local composer (based on PHP image) - RECOMMENDED:
 ```
 curl -fsSL 'https://getcomposer.org/composer.phar' -o ./composer.phar
 ```
@@ -46,15 +45,11 @@ and replace YAKE *composer* task by:
 ```
 composer: $BIN php ./composer.phar --optimize-autoloader $CMD
 ```
-
-Settings
----
-* edit `./docker/*/config.env` files
-* do not use `require-dev` in composer.json (keep common vendors)
+* run `yake console assetic:watch` in background to work with assets
 * `yake console assetic:dump --env=prod --no-debug` before deploy
-* `yake console assetic:watch` to work with assets locally
 
-Run (dev / rancher)
+
+Deploy (dev / rancher)
 ---
 ```
 yake push php
@@ -63,3 +58,15 @@ yake push nginx
 * import `./deploy/rancher/docker-compose.yml` into Rancher + complete ENVs
 * make sure `mysql` works on specific host (Scheduling)
 * make sure `nginx` has *Health Check* enabled
+
+
+Deploy (prod)
+---
+```
+yake push php
+yake push nginx
+```
+* import `./deploy/prod/docker-compose.yml` into server + copy ENV files from `docker` directory
+* `docker-compose pull --parallel --quiet`
+* `docker-compose up -d --force-recreate`
+

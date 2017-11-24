@@ -54,6 +54,7 @@ configure:
 configure-docker:
    - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./docker-compose.yml
    - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./deploy/rancher/docker-compose.yml
+   - perl -pi -w -e "s/{projectname}/$PROJECTNAME/g" ./deploy/prod/docker-compose.yml
 
 # default values
 _config:
